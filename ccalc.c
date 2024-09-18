@@ -1,6 +1,10 @@
 #include <stdio.h>
 #include <ncurses.h>
 #include <locale.h>
+#include <ctype.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
 
 short int A, B;
 int cursePos = 0;
@@ -49,37 +53,62 @@ void printMenu(){
     }
 }
 
+bool goodInput(char s[7]){
+    bool res = true;
+    
+    for(int i = 0; i < strlen(s); ++i){
+        if(!((i==0 && s[i] == '-') || isdigit(s[i]))){
+            res = false;
+            break;
+        }
+    }
+
+    return res;
+}
+
 void doSomething(int doing){
     switch (doing)
     {
     case 0:
         clear();
+
+        char strA[7] = "";
+
         printw("%s", "Введите A: ");
-        scanw("%d\n", &A);
+        scanw("%s\n", &strA);
 
-        // TODO: Проверка на дебила
-
-        hasA = true;
-
+        if(goodInput(strA)){
+            A = atoi(strA);
+            hasA = true;
+        }else{
+            printf("\n%s\n", "Неккоректные входные данные :(");
+            usleep(2000000);
+        }
+        
         clear();
         printMenu();
-
         break;
-    
+
     case 1:
         clear();
+
+        char strB[7] = "";
+
         printw("%s", "Введите B: ");
-        scanw("%d\n", &B);
+        scanw("%s\n", &strB);
 
-        // TODO: Проверка на дебила
-
-        hasB = true;
-
+        if(goodInput(strB)){
+            B = atoi(strB);
+            hasB = true;
+        }else{
+            printf("\n%s\n", "Неккоректные входные данные :(");
+            usleep(2000000);
+        }
+        
         clear();
         printMenu();
-
         break;
-    
+
     case 2:
         if(hasA && hasB){
             hasDoing = true;
@@ -152,24 +181,39 @@ int main(){
                 }
             }
             if (key == 27){
+                clear();
+                printw("Всё");
+                getch();
                 break;
             }
         }
         if(key == 49){
+            cursePos = 1;
             doSomething(0);
         }
         if(key == 50){
+            cursePos = 1;
             doSomething(1);
         }if(key == 51){
+            cursePos = 2;
             doSomething(2);
         }if(key == 52){
+            cursePos = 3;
             doSomething(3);
         }if(key == 53){
+            cursePos = 4;
             doSomething(4);
         }if(key == 54){
+            cursePos = 5;
             doSomething(5);
         }if(key == 55){
+            cursePos = 6;
+            clear();
+            printw("Всё");
+            getch();
             break;
+        }if(key == 10){
+            doSomething(cursePos);
         }
 
         clear();
