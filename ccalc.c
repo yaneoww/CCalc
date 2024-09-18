@@ -10,6 +10,7 @@ short int A, B;
 int cursePos = 0;
 bool hasA = false, hasB = false, hasDoing = false;
 int res;
+bool del0 = false;
 
 void printMenu(){
     char menu[9][27] = {
@@ -41,8 +42,10 @@ void printMenu(){
                 printw("%s", "Не введён B :(");
             }else if(!hasDoing){
                 printw("%s", "Не выбрано действие :(");
-            }
-            else{
+            }else if(del0){
+                printw("%s", "Делить на 0 нельзя :(");
+                del0 = false;
+            }else{
                 printw("%s%d", "Результат: ", res);
             }
         }
@@ -85,8 +88,6 @@ void doSomething(int doing){
             usleep(2000000);
         }
         
-        clear();
-        printMenu();
         break;
 
     case 1:
@@ -101,12 +102,10 @@ void doSomething(int doing){
             B = atoi(strB);
             hasB = true;
         }else{
-            printf("\n%s\n", "Неккоректные входные данные :(");
+            printw("\n%s\n", "Неккоректные входные данные :(");
             usleep(2000000);
         }
         
-        clear();
-        printMenu();
         break;
 
     case 2:
@@ -114,8 +113,6 @@ void doSomething(int doing){
             hasDoing = true;
             res = A + B;
         }
-        clear();
-        printMenu();
 
         break;
     
@@ -124,8 +121,6 @@ void doSomething(int doing){
             hasDoing = true;
             res = A - B;
         }
-        clear();
-        printMenu();
 
         break;
 
@@ -134,18 +129,18 @@ void doSomething(int doing){
             hasDoing = true;
             res = A * B;
         }
-        clear();
-        printMenu();
 
         break;
     
     case 5:
         if(hasA && hasB){
             hasDoing = true;
-            res = A / B;
+            if(B == 0){
+                del0 = true;
+            }else{
+                res = A / B;
+            }
         }
-        clear();
-        printMenu();
 
         break;
     
