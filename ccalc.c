@@ -44,6 +44,7 @@ void printMenu(){
                 printw("%s", "Не выбрано действие :(");
             }else if(del0){
                 printw("%s", "Делить на 0 нельзя :(");
+                hasDoing = false;
                 del0 = false;
             }else{
                 printw("%s%d", "Результат: ", res);
@@ -83,6 +84,7 @@ void doSomething(int doing){
         if(goodInput(strA)){
             A = atoi(strA);
             hasA = true;
+            hasDoing = false;
         }else{
             printf("\n%s\n", "Неккоректные входные данные :(");
             usleep(2000000);
@@ -93,7 +95,7 @@ void doSomething(int doing){
     case 1:
         clear();
 
-        char strB[7] = "";
+        char strB[100] = "";
 
         printw("%s", "Введите B: ");
         scanw("%s\n", &strB);
@@ -101,6 +103,7 @@ void doSomething(int doing){
         if(goodInput(strB)){
             B = atoi(strB);
             hasB = true;
+            hasDoing = false;
         }else{
             printw("\n%s\n", "Неккоректные входные данные :(");
             usleep(2000000);
