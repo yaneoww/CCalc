@@ -6,7 +6,7 @@
 #include <unistd.h>
 #include <string.h>
 
-long long int A, B;
+int A, B;
 int cursePos = 0;
 bool hasA = false, hasB = false, hasDoing = false;
 long long int res = 0;
@@ -47,8 +47,7 @@ void printMenu(){
                 hasDoing = false;
                 del0 = false;
             }else{
-
-                printw("%s %lld", "Результат:", res);
+                printw("%s%lld", "Результат: ", res);
             }
         }
         if (i == cursePos){
@@ -58,42 +57,7 @@ void printMenu(){
     }
 }
 
-bool inDiapozon(char s[100]){
-    // bool norm = true;
-    if((s[0] == '-' && strlen(s) > 6) || (s[0] != '-' && strlen(s) > 5)){
-        return false;
-    }
-
-    char maxp[7] = "65536"; 
-    char maxo[7] = "-65536"; 
-    if((s[0] == '-' && strlen(s) == 6) || (s[0] != '-' && strlen(s) == 5)){
-        if(s[0] == '-'){
-            for(int i = 1; i < strlen(s); ++i){
-            if(s[i]-'0' < maxo[i]-'0'){
-                return true;
-            }else if(s[i]-'0' > maxo[i] - '0'){
-                return false;
-            }else{
-                continue;
-            }
-            }
-        }else{
-          for(int i = 0; i < strlen(s); ++i){
-               if(s[i]-'0' < maxp[i]-'0'){
-                return true;
-            }else if(s[i]-'0' > maxp[i] - '0'){
-                return false;
-            }else{
-                continue;
-            }
-            } 
-        }
-    }
-
-    return true;
-}
-
-bool goodInput(char s[100]){
+bool goodInput(char s[7]){
     bool res = true;
     
     for(int i = 0; i < strlen(s); ++i){
@@ -112,17 +76,17 @@ void doSomething(int doing){
     case 0:
         clear();
 
-        char strA[100] = "";
+        char strA[7] = "";
 
         printw("%s", "Введите A: ");
         scanw("%s\n", &strA);
 
-        if(goodInput(strA) && inDiapozon(strA)){
+        if(goodInput(strA)){
             A = atoi(strA);
             hasA = true;
             hasDoing = false;
         }else{
-            printf("\n%s\n", "Неккоректные входные данные :( На вход принимаются только числа в диапозоне [-65536, 65536]");
+            printf("\n%s\n", "Неккоректные входные данные :(");
             usleep(2000000);
         }
         
@@ -136,12 +100,12 @@ void doSomething(int doing){
         printw("%s", "Введите B: ");
         scanw("%s\n", &strB);
 
-        if(goodInput(strB) && inDiapozon(strB)){
+        if(goodInput(strB)){
             B = atoi(strB);
             hasB = true;
             hasDoing = false;
         }else{
-            printf("\n%s\n", "Неккоректные входные данные :( На вход принимаются только числа в диапозоне [-65536, 65536]");
+            printw("\n%s\n", "Неккоректные входные данные :(");
             usleep(2000000);
         }
         

@@ -23,6 +23,7 @@
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
             "environment": [{ "name": "TERM", "value": "xterm-256color" }],
+            // "environment": [],
             "externalConsole": true,
             "MIMode": "lldb",
             "preLaunchTask": "C/C++: clang build active file"
